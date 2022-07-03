@@ -43,14 +43,14 @@ class S3Utilities:
         return create_status
 
     def write_data(self, data, bucket, file_key, content_type=None):
-        write_status = False
+        write_status, resp = False, None
         try:
             if content_type:
                 # For content_type, please refer to http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17 or https://stackoverflow.com/questions/34550816/aws-content-type-settings-in-s3-using-boto3
-                self.s3_client.put_object(Body=data, Bucket=bucket, Key=file_key, ContentType=content_type)
-                write_status = True
+                resp = self.s3_client.put_object(Body=data, Bucket=bucket, Key=file_key, ContentType=content_type, ACL='public-read')
             else:
-                self.s3_client.put_object(Body=data, Bucket=bucket, Key=file_key)
+                resp = self.s3_client.put_object(Body=data, Bucket=bucket, Key=file_key, ACL='public-read')
+            if resp and type(resp)==dict and "ResponseMetadata" in resp and "HTTPStatusCode" in resp["ResponseMetadata"] and resp["ResponseMetadata"]["HTTPStatusCode"] == 200:
                 write_status = True
         except Exception as e:
             logger.error("{0}\n{1}".format(e, traceback.format_exc()))
@@ -99,3 +99,13 @@ class S3Utilities:
         except Exception as e:
             logger.error("{0}\n{1}".format(e, traceback.format_exc()))
         return file_content
+
+    def delete_object(self, bucket_name, file_key):
+        status, resp = False, None
+        try:
+            resp = self.s3_client.delete_object(Bucket=bucket_name, Key=file_key)
+            if resp and type(resp)==dict and "ResponseMetadata" in resp and "HTTPStatusCode" in resp["ResponseMetadata"] and resp["ResponseMetadata"]["HTTPStatusCode"] in [200, 204]:
+                status = True
+        except Exception as e:
+            logger.error("{0}\n{1}".format(e, traceback.format_exc()))
+        return status
