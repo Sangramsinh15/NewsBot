@@ -13,11 +13,11 @@ import random
 import hashlib
 import datetime
 from dateutil.parser import parse
-import TOI_Links
+import GovCan_Links
 import constants
 from s3Utilities import S3Utilities
 
-class toiCrawler:
+class GovCanCrawler:
     def __init__(self):
         self.s3_obj = S3Utilities(constants.aws_access_key_id, constants.aws_secret_access_key, constants.aws_session_token)
                 
@@ -56,25 +56,26 @@ class toiCrawler:
         
         myJSON={}
         myList=[]  
-        for index,i in enumerate(TOI_Links.links):
+        for index,i in enumerate(GovCan_Links.links):
             NewsFeed = feedparser.parse(i["Link"])
             time.sleep(random.choice([1,2,3]))
             
             print ('Number of RSS posts :', len(NewsFeed.entries))            
                 
             for post in NewsFeed.entries:
-                readable_time, unix_timestamp = self.date_clean(post.published)
+                readable_time, unix_timestamp = self.date_clean(post.updated)
                 u=self.hash_url(post.link)
-                tempList={'title': post.title,'link':post.link,'readable_time':readable_time,'unix_timestamp':unix_timestamp,'description':TAG_RE.sub('', post.description),'source_tag':i["Tag"],'hash_url':u}
+                desc=TAG_RE.sub('', post.description)
+                tempList={'title': post.title,'link':post.link,'readable_time':readable_time,'unix_timestamp':unix_timestamp,'description':desc.strip(),'source_tag':i["Tag"],'hash_url':u}
                 myList.append(tempList.copy())
         
         myJSON=json.dumps(myList, indent=4)
-        file_key = "toi/{0}.json".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        file_key = "govCan/{0}.json".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         self.s3_obj.write_data(data=myJSON, bucket=constants.bucket_name, file_key=file_key)
 
 def lambda_handler(event, context):
     # TODO implement
-    cls_obj = toiCrawler()
+    cls_obj = GovCanCrawler()
     cls_obj.main()
 
 if __name__ == "__main__":
