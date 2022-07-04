@@ -65,7 +65,12 @@ class toiCrawler:
             for post in NewsFeed.entries:
                 readable_time, unix_timestamp = self.date_clean(post.published)
                 u=self.hash_url(post.link)
-                tempList={'title': post.title,'link':post.link,'readable_time':readable_time,'unix_timestamp':unix_timestamp,'description':TAG_RE.sub('', post.description),'source_tag':i["Tag"],'hash_url':u}
+                desc=TAG_RE.sub('', post.description)
+                if(desc.strip()==""):
+                    new_desc = post.title
+                else:
+                    new_desc = desc.strip()
+                tempList={'title': post.title,'link':post.link,'readable_time':readable_time,'unix_timestamp':unix_timestamp,'description':desc.strip(),'new_description':new_desc,'source_tag':i["Tag"],'hash_url':u}
                 myList.append(tempList.copy())
         
         myJSON=json.dumps(myList, indent=4)
