@@ -47,9 +47,9 @@ class S3Utilities:
         try:
             if content_type:
                 # For content_type, please refer to http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.17 or https://stackoverflow.com/questions/34550816/aws-content-type-settings-in-s3-using-boto3
-                resp = self.s3_client.put_object(Body=data, Bucket=bucket, Key=file_key, ContentType=content_type, ACL='public-read')
+                resp = self.s3_client.put_object(Body=data, Bucket=bucket, Key=file_key, ContentType=content_type)
             else:
-                resp = self.s3_client.put_object(Body=data, Bucket=bucket, Key=file_key, ACL='public-read')
+                resp = self.s3_client.put_object(Body=data, Bucket=bucket, Key=file_key)
             if resp and type(resp)==dict and "ResponseMetadata" in resp and "HTTPStatusCode" in resp["ResponseMetadata"] and resp["ResponseMetadata"]["HTTPStatusCode"] == 200:
                 write_status = True
         except Exception as e:
