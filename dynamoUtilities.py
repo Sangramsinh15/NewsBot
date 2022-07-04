@@ -104,3 +104,6 @@ class DynamoUtilities:
         except Exception as e:
             print("Error: {0}\nException: {1}".format(e, traceback.format_exc()))
         return status
+
+    def get_single_data(self):
+        pass
