@@ -34,7 +34,6 @@ def get_relevant_data():
         return jsonify({"message": "Send 'text' parameter in body"}), 400
     else:
         result = TestModel().test(metadata, embeddings, text, embedder, constants.top_document_count)
-        import pdb; pdb.set_trace()
         return jsonify(result), 200
 
 if __name__ == "__main__":
