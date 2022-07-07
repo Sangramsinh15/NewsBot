@@ -1,4 +1,5 @@
 import json
+from operator import itemgetter
 import urllib
 import requests
 import traceback
@@ -31,9 +32,13 @@ class LambdaAccessDb:
                 is_data_present = self.dynamo_util_object.get_single_data(each_data["hash_url"])
                 if not is_data_present:
                     if each_data["source_tag"] == "Others":
-                        # Hit API and tag the text
-                        pass
-                    self.dynamo_util_object.insert_single_data()
+                        resp = requests.get(constants.get_doc, data={"text":each_data["new_description"]})
+                        if resp.status_code == 200:
+                            resp_data = resp.json()
+                            resp_data = sorted(resp_data, key=itemgetter("relevancy_score"), reverse=True)
+                            rel_doc = resp_data[0]
+                            each_data["source_tag"] = rel_doc["source_tag"]
+                        self.dynamo_util_object.insert_single_data(table_name=constants.table_name, item_dict=each_data)
         except Exception as e:
             print("Error : {0}\nException : {1}".format(e, traceback.format_exc()))
 
