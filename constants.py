@@ -4,4 +4,4 @@ aws_session_token="FwoGZXIvYXdzEMf//////////wEaDH+WaxkE216yEdVXOyLAAXdOc2cBgqqwg
 
 bucket_name = "crawled-unprocessed-data"
 
-ec2_url = "18.233.156.42"
+get_doc = "http://18.233.156.42/get_relevant_docs"
