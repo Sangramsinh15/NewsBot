@@ -17,4 +17,4 @@ top_document_count = 5
 table_name = "news_data"
 
 # APIs
-get_doc = "http://18.233.156.42/get_relevant_docs"
+get_doc = "http://52.90.191.191/get_relevant_docs"
