@@ -73,9 +73,18 @@ class GovCanCrawler:
                 tempList={'title': post.title,'link':post.link,'readable_time':readable_time,'unix_timestamp':unix_timestamp,'description':desc.strip(),'new_description':new_desc,'source_tag':i["Tag"],'hash_url':u}
                 myList.append(tempList.copy())
         
-        myJSON=json.dumps(myList, indent=4)
-        file_key = "govCan/{0}.json".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        self.s3_obj.write_data(data=myJSON, bucket=constants.bucket_name, file_key=file_key)
+        if myList:
+            count = 0
+            batch_size = 150
+            list_to_write = myList[count:count+batch_size]
+            while list_to_write:
+                myJSON=json.dumps(list_to_write, indent=4)
+                file_key = "govCan/{0}_{1}_{2}.json".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), count, count+batch_size)
+                print(file_key)
+                self.s3_obj.write_data(data=myJSON, bucket=constants.bucket_name, file_key=file_key)
+                count += batch_size
+                list_to_write = myList[count:count+batch_size]
+                
 
 def lambda_handler(event, context):
     # TODO implement
