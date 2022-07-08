@@ -1,7 +1,7 @@
 # General AWS Credentials
-aws_access_key_id="ASIAX5UJGMCW2BW4MI5D"
-aws_secret_access_key="NDueB46lNnLMc2/EJKzKmi8z4ClSWEUclD+gB8fa"
-aws_session_token="FwoGZXIvYXdzEMf//////////wEaDH+WaxkE216yEdVXOyLAAXdOc2cBgqqwgyA0QjxVZq4DzxmQ+zpbLIR6nO7dKw+TtGRiwi+4XHqTN63Hw3F7j08zEvsGXuHtAj2yPZ54WbxBricpDOC+3A5sfisNdqo/V/W2raLrbAgxj48x9ZOvUQcZs02vkA0WPhCCjd3HzYvKYfvDpJHNqavFTjePsUGE9Pvt3cCm3W3EZZTz3uTjiJWp2weEuAB3uL0a2NCUW7JMcuBDEyQmV+Yuk041TRnLSa638AP3zzA9zaK4sdPDciiimZ2WBjItceuTPpQOogfclIVJHfdpyx+kDP3J75TNybDd4gtzw1wzQ63dpPJDr40RqyrS"
+aws_access_key_id="ASIAX5UJGMCWRK4KHKKB"
+aws_secret_access_key="U2tIvO0EOWYK1RzNoN8hHIELaepEDPBjLjQzL1/h"
+aws_session_token="FwoGZXIvYXdzEM3//////////wEaDHBbd1fP9lVMAFORxiLAAX9UWoDriyIORQ/grOV7cIawoHwhK6NXNldGc/S3RBVmgSDG4nDWD1OFsmCHYcObAcyUmtP0I8Blg/Wms9uphHC0Ppl4132pZcSE7OnFDy671Xi5Yk9VZScLu572c3QN2mtb/gkSfrL8JYmktvGRVLCyN4s0CrEzcrrWtcUHsom/BR6owmQ+J+QebwGaAz+mMMs6Jlrrb8vz1rTV4abfSrXoNS0io7cG/ZgDFvZ8SZRIqIPRHNvavDNJSCoMr6UO9Cjmz56WBjItvvgl9Y29eqcDtgBchY5YLiOkDhEQzq/29+Vh8m66aSQ4mjMdxRz16jpdobDN"
 
 # Redis
 redis_ttl = 20*60  #20 minutes
@@ -27,8 +27,8 @@ corpus_file_name = "corpus.pkl"
 metadata_file_name = "metadata.pkl"
 top_document_count = 5
 
-# Dynamo-DB Details
+# Dynamo-DB Detailsce
 table_name = "news_data"
 
 # APIs
-get_doc = "http://18.233.156.42/get_relevant_docs"
+get_doc = "http://52.90.191.191/get_relevant_docs"
