@@ -2,18 +2,16 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import AdbIcon from '@mui/icons-material/Adb';
+import { Grid } from '@mui/material';
 
 const NavbarComp = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Grid container maxWidth="xl" justifyContent="center" alignItems="center">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
-            variant="h6"
+            variant="h3"
             noWrap
             component="a"
             href="/"
@@ -30,7 +28,7 @@ const NavbarComp = () => {
             NewsBot
           </Typography>
         </Toolbar>
-      </Container>
+      </Grid>
     </AppBar>
   );
 };

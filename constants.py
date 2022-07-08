@@ -13,7 +13,7 @@ corpus_file_name = "corpus.pkl"
 metadata_file_name = "metadata.pkl"
 top_document_count = 5
 
-# Dynamo-DB Details
+# Dynamo-DB Detailsce
 table_name = "news_data"
 
 # APIs
