@@ -67,7 +67,7 @@ def get_response_1():
             if len(tags)>1:
                 redis_obj.set(session_id, json.dumps(result), constants.redis_ttl)
                 m = random.choice(["Found some articles, on which genre?", "Ammmm..! Which one?", "I am confused :/ On which genre?"])
-                return jsonify({"message": m, "hidden_message": None, "tags": tags, "data_to_display": None}), 200
+                return jsonify({"message": m, "hidden_message": True, "tags": tags, "data_to_display": None}), 200
             else:
                 m = random.choice(["Found something..", "Voila..!", "Bingo.!.", "I hope you like these.."])
                 return jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": result}), 200
