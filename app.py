@@ -7,7 +7,7 @@ import pickle
 import traceback
 
 import requests
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from sentence_transformers import SentenceTransformer
 
 import constants
@@ -43,9 +43,10 @@ def get_relevant_data():
         return jsonify({"message": "Send 'text' parameter in body"}), 400
     else:
         result = TestModel().test(metadata, embeddings, text, embedder, constants.top_document_count)
+
         return jsonify(result), 200
 
-@app.route("/get_response_1", methods=["GET"])
+@app.route("/get_response_1", methods=["GET", "OPTIONS"])
 def get_response_1():
     jsonPayload = request.get_json()
     text = jsonPayload.get("text", None)
@@ -67,14 +68,16 @@ def get_response_1():
             if len(tags)>1:
                 redis_obj.set(session_id, json.dumps(result), constants.redis_ttl)
                 m = random.choice(["Found some articles, on which genre?", "Ammmm..! Which one?", "I am confused :/ On which genre?"])
-                return jsonify({"message": m, "hidden_message": True, "tags": tags, "data_to_display": None}), 200
+                return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": m, "hidden_message": True, "tags": tags, "data_to_display": None}))
             else:
                 m = random.choice(["Found something..", "Voila..!", "Bingo.!.", "I hope you like these.."])
-                return jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": result}), 200
-        else:
-            return jsonify({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}), 200
 
-@app.route("/get_response_2", methods=["GET"])
+                return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps(
+                    {"message": m, "hidden_message": None, "tags": [], "data_to_display": result}))
+        else:
+            return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}))
+
+@app.route("/get_response_2", methods=["GET", "OPTIONS"])
 def get_response_2():
     jsonPayload = request.get_json()
     text = jsonPayload.get("text", None)
@@ -94,18 +97,26 @@ def get_response_2():
                 data_to_return = redis_data
                 m = random.choice(["Ahhh..there you go!", "I think you meant all..", "Okay okay got it, just have a look at these.."])
             redis_obj.delete(session_id)
-            return jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}), 200
+            return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}))
+
 
 def get_response_from_lex(text):
     result = None
     try:
-        result = "Abra Ka Dabra"
-        # resp = requests.post(constants.lex_api, headers=constants.lex_header, data=json.dumps({"inputText": text}))
-        # if resp.status_code == 200:
+        # result = "Abra Ka Dabra"
+        payload = json.dumps({
+            "inputText": text
+        })
+        headers = constants.lex_header
+        resp = requests.request("POST", constants.lex_api, headers=headers, data=payload)
+
+        pdb.set_trace()
+        if resp.status_code == 200:
+            pdb.set_trace()
     except Exception as e:
             print("Error: {0}\nException: {1}".format(e, traceback.format_exc()))
     return result
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=80)
