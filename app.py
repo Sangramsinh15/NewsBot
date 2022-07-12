@@ -57,7 +57,7 @@ def get_response_1():
     text = jsonPayload.get("text", None)
     session_id = jsonPayload.get("session_id", None)
     if request.method == "OPTIONS":
-        return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200)
+        return _build_cors_preflight_response()
     if not text:
         return jsonify({"message": "Send 'text' parameter in body"}), 400
     if not session_id:
@@ -91,7 +91,7 @@ def get_response_2():
     text = jsonPayload.get("text", None)
     session_id = jsonPayload.get("session_id", None)
     if request.method == "OPTIONS":
-        return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200)
+        return _build_cors_preflight_response()
     if not text:
         return jsonify({"message": "Send 'text' parameter in body. This will be the tag that you will fetch from the user."}), 400
     if not session_id:
