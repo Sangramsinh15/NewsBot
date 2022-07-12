@@ -51,6 +51,8 @@ def get_response_1():
     jsonPayload = request.get_json()
     text = jsonPayload.get("text", None)
     session_id = jsonPayload.get("session_id", None)
+    if request.method == "OPTIONS":
+        return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200)
     if not text:
         return jsonify({"message": "Send 'text' parameter in body"}), 400
     if not session_id:
@@ -82,6 +84,8 @@ def get_response_2():
     jsonPayload = request.get_json()
     text = jsonPayload.get("text", None)
     session_id = jsonPayload.get("session_id", None)
+    if request.method == "OPTIONS":
+        return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200)
     if not text:
         return jsonify({"message": "Send 'text' parameter in body. This will be the tag that you will fetch from the user."}), 400
     if not session_id:
@@ -110,7 +114,6 @@ def get_response_from_lex(text):
         headers = constants.lex_header
         resp = requests.request("POST", constants.lex_api, headers=headers, data=payload)
 
-        pdb.set_trace()
         if resp.status_code == 200:
             pdb.set_trace()
     except Exception as e:
