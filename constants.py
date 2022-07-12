@@ -9,11 +9,11 @@ redis_ttl = 20*60  #20 minutes
 # Lex
 lex_api = "https://runtime.lex.us-east-1.amazonaws.com/bot/NewsBotOne/alias/NOneTester/user/user2030182/text"
 lex_header = {
-'X-Amz-Content-Sha256': 'beaead3198f7da1e70d03ab969765e0821b24fc913697e929e726aeaebf0eba3',
-'X-Amz-Security-Token': 'FwoGZXIvYXdzEMb//////////wEaDBz27u+ZeQI89Eg5niLAAdnvC952lAcaY4to/RFqf2DQG4dQpNJv3NreNPMqURc8RHgc4GhjxgXVg/OTBH3mAFfqE4r3jgQma/tZNaL1bfkBKCR5NOHiUuifahUwbxkjuMF+V7R722P4LFokaPuMFeJOqeo6Omjnzu4jf6UdzURByJSuePs5DKB8jBTSjKXEK96goNr9xnslwDgXWsAvg1NgOHcJDnmklSLI0VTYTdAW1dJZ0Jg921SGfMGm1l9+neO543qVkfkCAmB4e75PzSitgJ2WBjIt6N8B3gD3Q8wsV3Vdxmx4PHum1ep0bfyuj9wpqtNtn9NFwgyrUwLzwwI5hHfB',
-'X-Amz-Date': '20220707T233830Z',
-'Authorization': 'AWS4-HMAC-SHA256 Credential=ASIATBDRR2Z5LFLS5I7X/20220707/us-east-1/lex/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=b83f5a3030af86d648ccfdb6940c2780a0e88dcf7d4ed775cd9d5c0c32ebbc66',
-'Content-Type': 'application/json'
+  'X-Amz-Content-Sha256': 'beaead3198f7da1e70d03ab969765e0821b24fc913697e929e726aeaebf0eba3',
+  'X-Amz-Security-Token': 'FwoGZXIvYXdzEDkaDOloHkT7ji5MHpSvMiLAAaCNLhnVRlLaioplwJ2KHPWvgMqfV/ADpn+m2kT3gLEtT6g/Lj2zp0PlH8ZvJUk3U8VGe8ACVNDbYLEbKeqf6PVdnhnezM8ZY7TJKgfGshqmUq4AGi1QPOrq0+2d0KIKrkg3tcLQNwNKJxl37k0h5983rBhXVlyXF8LV+tWZAh1c336LZfAgMI4e3SHOvA1allIzA35xeQO/7yDgy6CxSeIHRI4buABVdq9gUXx4jgAwvGAsVVqeLGPcJtwAKMB2HyijtbaWBjItwJFJvOcRwYj9AqAdea6hGEMquSEZpY9T2M9IYl79ERMExCxDdRbBm8SYX6AZ',
+  'X-Amz-Date': '20220712T160421Z',
+  'Authorization': 'AWS4-HMAC-SHA256 Credential=ASIAX5UJGMCWYGCIRX5R/20220712/us-east-1/lex/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=c93fbe697a55f8d7eaf279aa023405b7432aeaf8550ef54df0e2a00b745cf8c0',
+  'Content-Type': 'application/json'
 }
 
 
