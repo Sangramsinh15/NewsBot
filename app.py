@@ -7,7 +7,8 @@ import pickle
 import traceback
 
 import requests
-from flask import Flask, request, jsonify, Response
+from flask_cors import CORS, cross_origin
+from flask import Flask, request, jsonify, Response, make_response
 from sentence_transformers import SentenceTransformer
 
 import constants
@@ -16,7 +17,10 @@ from test_model import TestModel
 from s3Utilities import S3Utilities
 from dynamoUtilities import DynamoUtilities
 
+
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 s3_obj = S3Utilities(access_key_id=constants.aws_access_key_id, secret_access_key=constants.aws_secret_access_key, session_key=constants.aws_session_token)
 dynamo_obj = DynamoUtilities(access_key_id=constants.aws_access_key_id, secret_access_key=constants.aws_secret_access_key, session_key=constants.aws_session_token)
 redis_obj = redis.Redis(host= 'localhost', port= 6379)
@@ -47,6 +51,7 @@ def get_relevant_data():
         return jsonify(result), 200
 
 @app.route("/get_response_1", methods=["GET", "OPTIONS"])
+@cross_origin()
 def get_response_1():
     jsonPayload = request.get_json()
     text = jsonPayload.get("text", None)
@@ -80,6 +85,7 @@ def get_response_1():
             return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}))
 
 @app.route("/get_response_2", methods=["GET", "OPTIONS"])
+@cross_origin()
 def get_response_2():
     jsonPayload = request.get_json()
     text = jsonPayload.get("text", None)
@@ -103,6 +109,16 @@ def get_response_2():
             redis_obj.delete(session_id)
             return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}))
 
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    return response
+
+def _corsify_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 def get_response_from_lex(text):
     result = None
@@ -115,6 +131,7 @@ def get_response_from_lex(text):
         resp = requests.request("POST", constants.lex_api, headers=headers, data=payload)
 
         if resp.status_code == 200:
+            print("Stopped at Lex")
             pdb.set_trace()
     except Exception as e:
             print("Error: {0}\nException: {1}".format(e, traceback.format_exc()))
