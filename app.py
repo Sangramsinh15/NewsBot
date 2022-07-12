@@ -33,6 +33,8 @@ with open(constants.model_output_folder + constants.model_file_name, "rb") as fp
     metadata = ip_embeddings["metadata"]
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
 
+
+
 @app.route("/train_updated_data", methods=['POST'])
 @cross_origin()
 def initiate_training():
@@ -77,16 +79,16 @@ def get_response_1():
         if len(tags)>1:
             redis_obj.set(session_id, json.dumps(result), constants.redis_ttl)
             m = random.choice(["Found some articles, on which genre?", "Ammmm..! Which one?", "I am confused :/ On which genre?"])
-            return jsonify({"message": m, "hidden_message": True, "tags": tags, "data_to_display": None}), 200
+            return _corsify_actual_response(jsonify({"message": m, "hidden_message": True, "tags": tags, "data_to_display": None}))
             # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": m, "hidden_message": True, "tags": tags, "data_to_display": None}))
         else:
             m = random.choice(["Found something..", "Voila..!", "Bingo.!.", "I hope you like these.."])
-            return jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": result}), 200
+            return _corsify_actual_response(jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": result}))
 
             # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps(
             #     {"message": m, "hidden_message": None, "tags": [], "data_to_display": result}))
     else:
-        return jsonify({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}), 200
+        return _corsify_actual_response(jsonify({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}))
         # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}))
 
 @app.route("/get_response_2", methods=["GET", "OPTIONS"])
@@ -112,7 +114,7 @@ def get_response_2():
             data_to_return = redis_data
             m = random.choice(["Ahhh..there you go!", "I think you meant all..", "Okay okay got it, just have a look at these.."])
         redis_obj.delete(session_id)
-        return jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}), 200
+        return _corsify_actual_response(jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}))
         # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}))
 
 def _build_cors_preflight_response():
