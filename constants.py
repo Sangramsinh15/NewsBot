@@ -1,7 +1,7 @@
 # General AWS Credentials
-aws_access_key_id="ASIAX5UJGMCWRK4KHKKB"
-aws_secret_access_key="U2tIvO0EOWYK1RzNoN8hHIELaepEDPBjLjQzL1/h"
-aws_session_token="FwoGZXIvYXdzEM3//////////wEaDHBbd1fP9lVMAFORxiLAAX9UWoDriyIORQ/grOV7cIawoHwhK6NXNldGc/S3RBVmgSDG4nDWD1OFsmCHYcObAcyUmtP0I8Blg/Wms9uphHC0Ppl4132pZcSE7OnFDy671Xi5Yk9VZScLu572c3QN2mtb/gkSfrL8JYmktvGRVLCyN4s0CrEzcrrWtcUHsom/BR6owmQ+J+QebwGaAz+mMMs6Jlrrb8vz1rTV4abfSrXoNS0io7cG/ZgDFvZ8SZRIqIPRHNvavDNJSCoMr6UO9Cjmz56WBjItvvgl9Y29eqcDtgBchY5YLiOkDhEQzq/29+Vh8m66aSQ4mjMdxRz16jpdobDN"
+aws_access_key_id="ASIAX5UJGMCWZ7FRPOIL"
+aws_secret_access_key="2EyNBa0HTyJvXmO+hd8a99dZFpXZkgLgvE6gqVe6"
+aws_session_token="FwoGZXIvYXdzED0aDDhmYqgqj/ofr7P0IyLAAQx0verb8P6FX98Osj6/MCt6yE4syVcAi8LxStQspGRCGfk4YCp2u+VZmHqMAYS3yks+UZSVq5PoBtf36hxAc36PcjAZV4PfhaEwN44KyrGZK++zCnuFiShnA73KHGoVp4JFNED3d3TP/fWZnDOxz81Q4mSW+4ENMms3b+ycsvpJCRHQzvNT+Cpal96z+lHHj2mhcrnMCp2c1thb9824ohe6Mc5UolKAX2GpkAWA7ws0ImsA5yqFWjUfXkKpqFJYhij6preWBjItAMGY62a8VRm1bxXp9Ib3J9qmAeVNBCQu10oZOFiZDRsTZwzHmy7eG5YYoV+4"
 
 # Redis
 redis_ttl = 20*60  #20 minutes
@@ -10,12 +10,11 @@ redis_ttl = 20*60  #20 minutes
 lex_api = "https://runtime.lex.us-east-1.amazonaws.com/bot/NewsBotOne/alias/NOneTester/user/user2030182/text"
 lex_header = {
   'X-Amz-Content-Sha256': 'beaead3198f7da1e70d03ab969765e0821b24fc913697e929e726aeaebf0eba3',
-  'X-Amz-Security-Token': 'FwoGZXIvYXdzEDkaDOloHkT7ji5MHpSvMiLAAaCNLhnVRlLaioplwJ2KHPWvgMqfV/ADpn+m2kT3gLEtT6g/Lj2zp0PlH8ZvJUk3U8VGe8ACVNDbYLEbKeqf6PVdnhnezM8ZY7TJKgfGshqmUq4AGi1QPOrq0+2d0KIKrkg3tcLQNwNKJxl37k0h5983rBhXVlyXF8LV+tWZAh1c336LZfAgMI4e3SHOvA1allIzA35xeQO/7yDgy6CxSeIHRI4buABVdq9gUXx4jgAwvGAsVVqeLGPcJtwAKMB2HyijtbaWBjItwJFJvOcRwYj9AqAdea6hGEMquSEZpY9T2M9IYl79ERMExCxDdRbBm8SYX6AZ',
-  'X-Amz-Date': '20220712T160421Z',
-  'Authorization': 'AWS4-HMAC-SHA256 Credential=ASIAX5UJGMCWYGCIRX5R/20220712/us-east-1/lex/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=c93fbe697a55f8d7eaf279aa023405b7432aeaf8550ef54df0e2a00b745cf8c0',
+  'X-Amz-Security-Token': 'FwoGZXIvYXdzED0aDDhmYqgqj/ofr7P0IyLAAQx0verb8P6FX98Osj6/MCt6yE4syVcAi8LxStQspGRCGfk4YCp2u+VZmHqMAYS3yks+UZSVq5PoBtf36hxAc36PcjAZV4PfhaEwN44KyrGZK++zCnuFiShnA73KHGoVp4JFNED3d3TP/fWZnDOxz81Q4mSW+4ENMms3b+ycsvpJCRHQzvNT+Cpal96z+lHHj2mhcrnMCp2c1thb9824ohe6Mc5UolKAX2GpkAWA7ws0ImsA5yqFWjUfXkKpqFJYhij6preWBjItAMGY62a8VRm1bxXp9Ib3J9qmAeVNBCQu10oZOFiZDRsTZwzHmy7eG5YYoV+4',
+  'X-Amz-Date': '20220712T201837Z',
+  'Authorization': 'AWS4-HMAC-SHA256 Credential=ASIAX5UJGMCWZ7FRPOIL/20220712/us-east-1/lex/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=0cb249cad0a3948f6fd529da153efe6bcf75858903c461aa8660eae549be3a3e',
   'Content-Type': 'application/json'
 }
-
 
 # For Crawlers
 bucket_name = "crawled-unprocessed-data"
@@ -31,4 +30,4 @@ top_document_count = 5
 table_name = "news_data"
 
 # APIs
-get_doc = "http://52.90.191.191/get_relevant_docs"
+get_doc = "http://3.83.223.0/get_relevant_docs"
