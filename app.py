@@ -1,14 +1,13 @@
-import pdb
-import random
 import time
 import json
+import boto3
 import redis
 import pickle
+import random
 import traceback
 
-import requests
 from flask_cors import CORS, cross_origin
-from flask import Flask, request, jsonify, Response, make_response
+from flask import Flask, request, jsonify, make_response
 from sentence_transformers import SentenceTransformer
 
 import constants
@@ -20,9 +19,12 @@ from dynamoUtilities import DynamoUtilities
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"*":{"origins":"*"}})
-# app.config['CORS_HEADERS'] = 'Content-Type'
 s3_obj = S3Utilities(access_key_id=constants.aws_access_key_id, secret_access_key=constants.aws_secret_access_key, session_key=constants.aws_session_token)
 dynamo_obj = DynamoUtilities(access_key_id=constants.aws_access_key_id, secret_access_key=constants.aws_secret_access_key, session_key=constants.aws_session_token)
+
+lex_client = boto3.client('lex-runtime', aws_access_key_id=constants.aws_access_key_id, aws_secret_access_key=constants.aws_secret_access_key, aws_session_token=constants.aws_session_token, region_name="us-east-1")
+
+
 redis_obj = redis.Redis(host= 'localhost', port= 6379)
 redis_obj.flushall()
 
@@ -60,13 +62,6 @@ def get_response_1():
     jsonPayload = request.get_json()
     text = jsonPayload.get("text", None)
     session_id = jsonPayload.get("session_id", None)
-    # if request.method == "OPTIONS":
-    #     return _build_cors_preflight_response()
-    # if not text:
-    #     return jsonify({"message": "Send 'text' parameter in body"}), 400
-    # if not session_id:
-    #     return jsonify({"message": "Send 'session_id' parameter in body"}), 400
-    # else:
     resp = get_response_from_lex(text)
 
     if resp is None or resp == "Abra Ka Dabra":
@@ -80,16 +75,11 @@ def get_response_1():
             redis_obj.set(session_id, json.dumps(result), constants.redis_ttl)
             m = random.choice(["Found some articles, on which genre?", "Ammmm..! Which one?", "I am confused :/ On which genre?"])
             return _corsify_actual_response(jsonify({"message": m, "hidden_message": True, "tags": tags, "data_to_display": None}))
-            # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": m, "hidden_message": True, "tags": tags, "data_to_display": None}))
         else:
             m = random.choice(["Found something..", "Voila..!", "Bingo.!.", "I hope you like these.."])
             return _corsify_actual_response(jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": result}))
-
-            # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps(
-            #     {"message": m, "hidden_message": None, "tags": [], "data_to_display": result}))
     else:
         return _corsify_actual_response(jsonify({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}))
-        # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}))
 
 @app.route("/get_response_2", methods=["POST"])
 @cross_origin()
@@ -97,13 +87,6 @@ def get_response_2():
     jsonPayload = request.get_json()
     text = jsonPayload.get("text", None)
     session_id = jsonPayload.get("session_id", None)
-    # if request.method == "OPTIONS":
-    #     return _build_cors_preflight_response()
-    # if not text:
-    #     return jsonify({"message": "Send 'text' parameter in body. This will be the tag that you will fetch from the user."}), 400
-    # if not session_id:
-    #     return jsonify({"message": "Send 'session_id' parameter in body. This session_id will be the same that you have already sent in get_response_1."}), 400
-    # else:
     redis_data = redis_obj.get(session_id)
     if redis_data:
         redis_data = json.loads(redis_data)
@@ -115,7 +98,6 @@ def get_response_2():
             m = random.choice(["Ahhh..there you go!", "I think you meant all..", "Okay okay got it, just have a look at these.."])
         redis_obj.delete(session_id)
         return _corsify_actual_response(jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}))
-        # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}))
 
 def _build_cors_preflight_response():
     response = make_response()
@@ -131,16 +113,9 @@ def _corsify_actual_response(response):
 def get_response_from_lex(text):
     result = None
     try:
-        # result = "Abra Ka Dabra"
-        payload = json.dumps({
-            "inputText": text
-        })
-        headers = constants.lex_header
-        resp = requests.request("POST", constants.lex_api, headers=headers, data=payload)
-
-        if resp.status_code == 200:
-            print("Stopped at Lex")
-            pdb.set_trace()
+        response = lex_client.post_text(botName=constants.botName, botAlias=constants.botAlias, userId=constants.aws_userId, inputText=text)
+        if response.get("message", False) and response["message"]:
+            result = response["message"]
     except Exception as e:
             print("Error: {0}\nException: {1}".format(e, traceback.format_exc()))
     return result
