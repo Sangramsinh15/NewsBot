@@ -12,6 +12,7 @@ import axios from "axios";
 import { myResponse } from "./Components/Main Header/index1";
 import ResponseCardComp from "./Components/ResponseCardComp";
 import GenreComp from "./Components/GenreComp";
+import DialogComp from "./Components/DialogComp";
 
 const darkTheme = createTheme({
   palette: {
@@ -19,14 +20,19 @@ const darkTheme = createTheme({
   },
 });
 
-const sessionID = "1234"
+const sessionID = "1234";
 
 function App() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [result, setResult] = useState({});
   const [tags, setTags] = useState([]);
+  var hiddenMessage = false;
+  var dataToDisplay = null;
+  var [dataToDisplayData, setDataToDisplayData] = useState(null);
 
   var mytags = [];
+
+  useEffect(() => {}, [dataToDisplayData]);
 
   const handleClick = async (e) => {
     const tempResult = {
@@ -41,7 +47,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://34.231.244.174/get_response_1",
+      url: "http://3.237.3.19/get_response_1",
       headers: {
         "Content-Type": "application/json",
       },
@@ -56,6 +62,8 @@ function App() {
         };
         myResponse.push(AIresponse);
         mytags = response.data.tags;
+        hiddenMessage = response.data.hidden_message;
+        dataToDisplay = response.data.data_to_display;
       })
       .catch(function(error) {
         console.log(error);
@@ -63,20 +71,83 @@ function App() {
         console.log(error.response);
         console.log(error.request);
       });
+    if (hiddenMessage === true) {
+      setTags(mytags);
+    }
+    if (hiddenMessage === null && dataToDisplay !== null) {
+      console.log(dataToDisplay);
+    }
     setResult(tempResult);
-    setTags(mytags);
+    setDataToDisplayData(dataToDisplay);
     console.log(tags);
+    console.log(hiddenMessage);
+  };
+
+  const clickedTag = async (e) => {
+    var data = JSON.stringify({
+      text: e.target.id,
+      session_id: sessionID,
+    });
+
+    var config = {
+      method: "post",
+      url: "http://33.237.3.19/get_response_2",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    console.log("data", data);
+
+    await axios(config)
+      .then(function(response) {
+        console.log(JSON.stringify(response));
+        dataToDisplay = response.data.data_to_display;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    console.log("data", dataToDisplay);
+    setDataToDisplayData(dataToDisplay);
+    setTags([]);
   };
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Grid container spacing={0.5} justifyContent="center" alignItems="center">
+      <Grid container spacing={0.5} justifyContent="center">
         <Grid item xs={12}>
           <NavbarComp />
         </Grid>
-        <Grid item xs={6}>
+
+        <Grid item xs={12}>
+          <Grid
+            container
+            sx={{ pt: 3, pl: 36, pr: 36, pb: 3 }}
+            alignItems="center"
+          >
+            <Box sx={{ flexGrow: 1, mr: 1 }}>
+              <Paper>
+                <TextField
+                  id="searchKeyword"
+                  name="searchKeyword"
+                  type="search"
+                  label="Please Enter a Query"
+                  variant="filled"
+                  onChange={(v) => setSearchKeyword(v.target.value)}
+                  fullWidth
+                />
+              </Paper>
+            </Box>
+            <Button onClick={handleClick} variant="contained">
+              <Typography p={1}>Search</Typography>
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={3}>
           <Grid container direction="column" sx={{ pt: 3 }} alignItems="center">
-            {myResults.map((myVariable) => {
+            {myResults?.map((myVariable) => {
               return (
                 <MessageCardComp
                   text={myVariable.message}
@@ -86,7 +157,7 @@ function App() {
             })}
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={3}>
           <Grid container direction="column" sx={{ pt: 3 }} alignItems="center">
             {myResponse.map((myVariable) => {
               return (
@@ -99,50 +170,47 @@ function App() {
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={6} sx={{ borderLeft: 1 }}>
+          {dataToDisplayData?.map((myVariable, index) => {
+            return (
+              <DialogComp
+                title={myVariable.title}
+                description={myVariable.description}
+                date={myVariable.readable_time}
+                link={myVariable.link}
+                ind={index + 1}
+              />
+            );
+          })}
+        </Grid>
+
+        <Grid item xs={6}>
           <Grid
             container
             justifyContent="center"
             alignItems="center"
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 4, sm: 8, md: 12 }}
-            sx={{pt:4}}
+            sx={{ pt: 4 }}
           >
-            {tags.map((myVar, index) => {
-              return <GenreComp text={myVar} />;
+            {tags.map((myVar) => {
+              return (
+                <Box sx={{ pt: 0.2, pr: 0.2 }}>
+                  <Button id={myVar} onClick={clickedTag} variant="contained">
+                    {myVar}
+                  </Button>
+                </Box>
+              );
             })}
           </Grid>
         </Grid>
 
-        <Grid item xs={8}>
-          <Grid container sx={{ pt: 3 }} alignItems="center">
-            <Box
-              component="span"
-              sx={{
-                fontSize: 16,
-                fontFamily: "Arial",
-                fontWeight: "bold",
-                mr: 2,
-              }}
-            >
-              Please Enter a Query
-            </Box>
-            <Box sx={{ flexGrow: 1, mr: 1 }}>
-              <Paper>
-                <TextField
-                  id="searchKeyword"
-                  name="searchKeyword"
-                  type="search"
-                  variant="filled"
-                  onChange={(v) => setSearchKeyword(v.target.value)}
-                  fullWidth
-                />
-              </Paper>
-            </Box>
-            <Button onClick={handleClick} variant="contained">
-              <Typography p={1}>Search</Typography>
-            </Button>
-          </Grid>
+        <Grid item xs={6}>
+          {/* Render somethign here */}
+        </Grid>
+
+        <Grid item xs={6}>
+          {/* Render somethign here */}
         </Grid>
       </Grid>
     </ThemeProvider>

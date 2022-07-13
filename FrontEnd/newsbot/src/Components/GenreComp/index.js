@@ -87,7 +87,7 @@ function GenreComp(props) {
               <DialogComp
                 title={myVar.title}
                 description={myVar.description}
-                date={myVar.date}
+                date={myVar.readable_time}
               />
             );
           })}
