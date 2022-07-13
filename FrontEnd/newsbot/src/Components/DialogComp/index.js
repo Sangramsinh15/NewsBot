@@ -3,12 +3,17 @@ import { Typography, Box, Grid, Link } from "@mui/material";
 
 function DialogComp(props) {
   // props.renderr(Math.random());
+
+  var refinedDate = props.date;
+  refinedDate = refinedDate.substring(0, 10);
+
   return (
-    <Grid sx={{borderBottom:1}}>
+    <Grid sx={{ border: 1, p:1, borderRadius: 1,backgroundColor:"#DBDE96", color:"black" }}>
       <Box
         component="div"
         sx={{
-          display: "inline",
+          pt: 1,
+          pl: 3,
           fontSize: 16,
           fontFamily: "Arial",
           fontWeight: "bold",
@@ -26,47 +31,37 @@ function DialogComp(props) {
           fontWeight: "bold",
         }}
       >
-        Desc: {props.description}
+        Description: {props.description}
       </Box>
 
-      <Box
-        component="div"
-        sx={{
-          display: "inline",
-          pt: 1,
-          pl: 3,
-          fontSize: 16,
-          fontFamily: "Arial",
-          fontWeight: "bold",
-        }}
-      >
-        Link:
-      </Box>
+      <Box sx={{ pt: 1 }}></Box>
 
       <Link
         href={props.link}
         sx={{
           pt: 1,
+          color: "blue",
           pl: 3,
           fontSize: 16,
           fontFamily: "Arial",
           fontWeight: "bold",
         }}
       >
-        Link
+        Link to the Article
       </Link>
       <Grid container>
         <Box sx={{ flexGrow: 1 }}></Box>
         <Box
           component="span"
           sx={{
-            pr:3,
-            fontSize: 12,
+            pr: 3,
+            pb: 1,
+            fontSize: 16,
             fontFamily: "Arial",
             fontWeight: "bold",
           }}
         >
-          Date: {props.date}
+          Date: {refinedDate}
         </Box>
       </Grid>
     </Grid>

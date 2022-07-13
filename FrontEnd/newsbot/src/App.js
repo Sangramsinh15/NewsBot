@@ -6,10 +6,10 @@ import { TextField } from "@mui/material";
 import { Paper } from "@mui/material";
 import { Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { myResults } from "./Components/Main Header";
+// import { myResults } from "./Components/Main Header";
 import MessageCardComp from "./Components/MessageCard";
 import axios from "axios";
-import { myResponse } from "./Components/Main Header/index1";
+// import { myResponse } from "./Components/Main Header/index1";
 import ResponseCardComp from "./Components/ResponseCardComp";
 import GenreComp from "./Components/GenreComp";
 import DialogComp from "./Components/DialogComp";
@@ -19,6 +19,9 @@ const darkTheme = createTheme({
     mode: "dark",
   },
 });
+
+var myResults = [{}];
+var myResponse = [{}];
 
 const sessionID = "1234";
 
@@ -35,6 +38,10 @@ function App() {
   useEffect(() => {}, [dataToDisplayData]);
 
   const handleClick = async (e) => {
+    myResults = [{}];
+    myResponse = [{}];
+    myResults.pop();
+    myResults.pop();
     const tempResult = {
       message: searchKeyword,
     };
@@ -47,7 +54,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://3.237.3.19/get_response_1",
+      url: "http://3.235.31.252/get_response_1",
       headers: {
         "Content-Type": "application/json",
       },
@@ -91,7 +98,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://33.237.3.19/get_response_2",
+      url: "http://3.235.31.252/get_response_2",
       headers: {
         "Content-Type": "application/json",
       },
@@ -159,7 +166,7 @@ function App() {
         </Grid>
         <Grid item xs={3}>
           <Grid container direction="column" sx={{ pt: 3 }} alignItems="center">
-            {myResponse.map((myVariable) => {
+            {myResponse?.map((myVariable) => {
               return (
                 <ResponseCardComp
                   text={myVariable.message}
@@ -170,7 +177,12 @@ function App() {
           </Grid>
         </Grid>
 
-        <Grid item xs={6} sx={{ borderLeft: 1 }}>
+        <Grid
+          container
+          xs={6}
+          sx={{ borderLeft: 1, pl: 10, pr: 10 }}
+          alignItems="center"
+        >
           {dataToDisplayData?.map((myVariable, index) => {
             return (
               <DialogComp
@@ -193,7 +205,7 @@ function App() {
             columns={{ xs: 4, sm: 8, md: 12 }}
             sx={{ pt: 4 }}
           >
-            {tags.map((myVar) => {
+            {tags?.map((myVar) => {
               return (
                 <Box sx={{ pt: 0.2, pr: 0.2 }}>
                   <Button id={myVar} onClick={clickedTag} variant="contained">
