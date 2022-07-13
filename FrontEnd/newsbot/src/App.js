@@ -41,7 +41,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://44.200.109.25:80/get_response_1",
+      url: "http://34.231.244.174/get_response_1",
       headers: {
         "Content-Type": "application/json",
       },

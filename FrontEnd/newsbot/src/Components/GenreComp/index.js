@@ -1,40 +1,64 @@
-import { Button } from "@mui/material";
-import React from "react";
+import { Button, Typography, Divider } from "@mui/material";
 import { Box } from "@mui/material";
+import React, { useEffect } from "react";
+import axios from "axios";
+import Modal from "@mui/material/Modal";
+import { useState } from "react";
+import DialogComp from "../DialogComp";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 function GenreComp(props) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [loading, setLoading] = useState(0);
+  const handleClose = () => setOpen(false);
 
-  const handleClick =  (e) => {
+  var api2Response = [
+    {
+      title: "ss",
+      description: "s",
+      date: "sx",
+    },
+  ];
+
+  const handleOpen = async (e) => {
     var data = JSON.stringify({
-        text: props.text,
-        session_id: "1234",
-      });
-  
-      var config = {
-        method: "post",
-        url: "http://44.200.109.25:80/get_response_2",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-  
-      await axios(config)
-        .then(function(response) {
-          console.log(JSON.stringify(response));
-          const api2Response = response.data.message;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      setResult(tempResult);
-      setTags(mytags);
-      console.log(tags);
-      setOpen(true)
+      text: props.text,
+      session_id: "1234",
+    });
+
+    var config = {
+      method: "post",
+      url: "http://34.231.244.174/get_response_2",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
     };
-  
+
+    console.log("data", data);
+
+    await axios(config)
+      .then(function(response) {
+        console.log(JSON.stringify(response));
+        api2Response = response.data.data_to_display;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+      console.log("data", api2Response);
+    setOpen(true);
+  };
 
   return (
     <Box sx={{ pt: 0.2, pr: 0.2 }}>
@@ -53,16 +77,20 @@ function GenreComp(props) {
             variant="h5"
             component="h2"
             sx={{ mb: 2 }}
+            color="text.secondary"
           >
             Articles Related to {props.text}:
           </Typography>
           <Divider />
-          <Typography sx={{ mt: 2 }}>
-            {props.desc}
-          </Typography>
-          <Typography sx={{ mt: 2 }}>
-            {props.desc}
-          </Typography>
+          {api2Response.map((myVar) => {
+            return (
+              <DialogComp
+                title={myVar.title}
+                description={myVar.description}
+                date={myVar.date}
+              />
+            );
+          })}
         </Box>
       </Modal>
     </Box>
