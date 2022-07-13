@@ -54,7 +54,7 @@ def get_relevant_data():
 
         return jsonify(result), 200
 
-@app.route("/get_response_1", methods=["GET"])
+@app.route("/get_response_1", methods=["POST"])
 @cross_origin()
 def get_response_1():
     jsonPayload = request.get_json()
@@ -91,7 +91,7 @@ def get_response_1():
         return _corsify_actual_response(jsonify({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}))
         # return Response(headers={'Access-Control-Allow-Origin': '*'}, status=200, response=json.dumps({"message": resp, "hidden_message": None, "tags": [], "data_to_display": None}))
 
-@app.route("/get_response_2", methods=["GET", "OPTIONS"])
+@app.route("/get_response_2", methods=["POST"])
 @cross_origin()
 def get_response_2():
     jsonPayload = request.get_json()
