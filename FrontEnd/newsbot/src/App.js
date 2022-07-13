@@ -10,6 +10,8 @@ import { myResults } from "./Components/Main Header";
 import MessageCardComp from "./Components/MessageCard";
 import axios from "axios";
 import { myResponse } from "./Components/Main Header/index1";
+import ResponseCardComp from "./Components/ResponseCardComp";
+import GenreComp from "./Components/GenreComp";
 
 const darkTheme = createTheme({
   palette: {
@@ -17,11 +19,14 @@ const darkTheme = createTheme({
   },
 });
 
-const sessionID = Math.random();
+const sessionID = "1234"
 
 function App() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [result, setResult] = useState({});
+  const [tags, setTags] = useState([]);
+
+  var mytags = [];
 
   const handleClick = async (e) => {
     const tempResult = {
@@ -29,46 +34,28 @@ function App() {
     };
     myResults.push(tempResult);
 
-    // const options = {
-    //   method: 'GET',
-    //   url: 'https://aeona3.p.rapidapi.com/',
-    //   params: {text: searchKeyword, userId: '12312312312'},
-    //   headers: {
-    //     'X-RapidAPI-Key': '2fcf9a9295msh7f84f3d7cf672fap1840acjsn2ebffec33f64',
-    //     'X-RapidAPI-Host': 'aeona3.p.rapidapi.com'
-    //   }
-    // };
-
-    // await axios.request(options).then(function (response) {
-    //   const AIresponse = {
-    //     message: response.data,
-    //   };
-    //   myResponse.push(AIresponse);
-    // }).catch(function (error) {
-    //   console.error(error);
-    // });
-
     var data = JSON.stringify({
-      text : searchKeyword,
-      session_id: "1234"
+      text: searchKeyword,
+      session_id: sessionID,
     });
 
     var config = {
-      method: "get",
-      url: "http://3.83.90.206/get_response_1",
+      method: "post",
+      url: "http://44.200.109.25:80/get_response_1",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       data: data,
     };
-    
+
     await axios(config)
       .then(function(response) {
-         console.log(JSON.stringify(response));
+        console.log(JSON.stringify(response));
         const AIresponse = {
           message: response.data.message,
         };
         myResponse.push(AIresponse);
+        mytags = response.data.tags;
       })
       .catch(function(error) {
         console.log(error);
@@ -76,8 +63,9 @@ function App() {
         console.log(error.response);
         console.log(error.request);
       });
-
     setResult(tempResult);
+    setTags(mytags);
+    console.log(tags);
   };
 
   return (
@@ -102,11 +90,26 @@ function App() {
           <Grid container direction="column" sx={{ pt: 3 }} alignItems="center">
             {myResponse.map((myVariable) => {
               return (
-                <MessageCardComp
+                <ResponseCardComp
                   text={myVariable.message}
                   name={myVariable.name}
                 />
               );
+            })}
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+            sx={{pt:4}}
+          >
+            {tags.map((myVar, index) => {
+              return <GenreComp text={myVar} />;
             })}
           </Grid>
         </Grid>
