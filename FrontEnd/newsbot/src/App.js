@@ -6,10 +6,10 @@ import { TextField } from "@mui/material";
 import { Paper } from "@mui/material";
 import { Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-// import { myResults } from "./Components/Main Header";
+import { myResults } from "./Components/Main Header";
 import MessageCardComp from "./Components/MessageCard";
 import axios from "axios";
-// import { myResponse } from "./Components/Main Header/index1";
+import { myResponse } from "./Components/Main Header/index1";
 import ResponseCardComp from "./Components/ResponseCardComp";
 import GenreComp from "./Components/GenreComp";
 import DialogComp from "./Components/DialogComp";
@@ -20,8 +20,6 @@ const darkTheme = createTheme({
   },
 });
 
-var myResults = [{}];
-var myResponse = [{}];
 
 const sessionID = "1234";
 
@@ -38,10 +36,7 @@ function App() {
   useEffect(() => {}, [dataToDisplayData]);
 
   const handleClick = async (e) => {
-    myResults = [{}];
-    myResponse = [{}];
-    myResults.pop();
-    myResults.pop();
+
     const tempResult = {
       message: searchKeyword,
     };
