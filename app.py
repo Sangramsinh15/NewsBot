@@ -63,7 +63,8 @@ def get_response_1():
     text = jsonPayload.get("text", None)
     session_id = jsonPayload.get("session_id", None)
     resp = get_response_from_lex(text)
-
+    if redis_obj.get(session_id):
+        redis_obj.delete(session_id)
     if resp is None or resp == "Abra Ka Dabra":
         if resp is None:
             print("No response from Lex")
@@ -96,7 +97,6 @@ def get_response_2():
         else:
             data_to_return = redis_data
             m = random.choice(["Ahhh..there you go!", "I think you meant all..", "Okay okay got it, just have a look at these.."])
-        redis_obj.delete(session_id)
         return _corsify_actual_response(jsonify({"message": m, "hidden_message": None, "tags": [], "data_to_display": data_to_return}))
 
 def _build_cors_preflight_response():
