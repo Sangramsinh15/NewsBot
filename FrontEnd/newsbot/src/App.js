@@ -49,7 +49,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://3.235.31.252/get_response_1",
+      url: "http://3.237.3.159/get_response_1",
       headers: {
         "Content-Type": "application/json",
       },
@@ -58,7 +58,7 @@ function App() {
 
     await axios(config)
       .then(function(response) {
-        console.log(JSON.stringify(response));
+        // console.log(JSON.stringify(response));
         const AIresponse = {
           message: response.data.message,
         };
@@ -81,8 +81,8 @@ function App() {
     }
     setResult(tempResult);
     setDataToDisplayData(dataToDisplay);
-    console.log(tags);
-    console.log(hiddenMessage);
+    // console.log(tags);
+    // console.log(hiddenMessage);
   };
 
   const clickedTag = async (e) => {
@@ -93,7 +93,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://3.235.31.252/get_response_2",
+      url: "http://3.237.3.159/get_response_2",
       headers: {
         "Content-Type": "application/json",
       },
@@ -104,15 +104,16 @@ function App() {
 
     await axios(config)
       .then(function(response) {
-        console.log(JSON.stringify(response));
+        // console.log(JSON.stringify(response));
         dataToDisplay = response.data.data_to_display;
       })
       .catch(function(error) {
         console.log(error);
       });
-    console.log("data", dataToDisplay);
+    // console.log("data", dataToDisplay);
     setDataToDisplayData(dataToDisplay);
-    setTags([]);
+    // setTags(mytags);
+    console.log("tags",tags);
   };
 
   return (
@@ -144,6 +145,30 @@ function App() {
             <Button onClick={handleClick} variant="contained">
               <Typography p={1}>Search</Typography>
             </Button>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+            sx={{ pt: 4,pb:2 }}
+          >
+            {tags.length !== 0 && (
+               <Typography sx={{pr:1}}>Select a Genre: </Typography>
+          )}
+            {tags?.map((myVar) => {
+              return (
+                <Box sx={{ pt: 0.2, pr: 0.2 }}>
+                  <Button id={myVar} onClick={clickedTag} variant="contained">
+                    {myVar}
+                  </Button>
+                </Box>
+              );
+            })}
           </Grid>
         </Grid>
 
@@ -189,27 +214,6 @@ function App() {
               />
             );
           })}
-        </Grid>
-
-        <Grid item xs={6}>
-          <Grid
-            container
-            justifyContent="center"
-            alignItems="center"
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-            sx={{ pt: 4 }}
-          >
-            {tags?.map((myVar) => {
-              return (
-                <Box sx={{ pt: 0.2, pr: 0.2 }}>
-                  <Button id={myVar} onClick={clickedTag} variant="contained">
-                    {myVar}
-                  </Button>
-                </Box>
-              );
-            })}
-          </Grid>
         </Grid>
 
         <Grid item xs={6}>
