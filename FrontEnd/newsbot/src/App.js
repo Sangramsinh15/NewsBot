@@ -13,13 +13,14 @@ import { myResponse } from "./Components/Main Header/index1";
 import ResponseCardComp from "./Components/ResponseCardComp";
 import GenreComp from "./Components/GenreComp";
 import DialogComp from "./Components/DialogComp";
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
 });
-
 
 const sessionID = "1234";
 
@@ -36,7 +37,6 @@ function App() {
   useEffect(() => {}, [dataToDisplayData]);
 
   const handleClick = async (e) => {
-
     const tempResult = {
       message: searchKeyword,
     };
@@ -78,11 +78,13 @@ function App() {
     }
     if (hiddenMessage === null && dataToDisplay !== null) {
       console.log(dataToDisplay);
+      setTags([]);
+    }
+    if (hiddenMessage === null) {
+      setTags([]);
     }
     setResult(tempResult);
     setDataToDisplayData(dataToDisplay);
-    // console.log(tags);
-    // console.log(hiddenMessage);
   };
 
   const clickedTag = async (e) => {
@@ -113,7 +115,7 @@ function App() {
     // console.log("data", dataToDisplay);
     setDataToDisplayData(dataToDisplay);
     // setTags(mytags);
-    console.log("tags",tags);
+    console.log("tags", tags);
   };
 
   return (
@@ -129,6 +131,14 @@ function App() {
             sx={{ pt: 3, pl: 36, pr: 36, pb: 3 }}
             alignItems="center"
           >
+            <Box sx={{ mr: 1 }}>
+              <Button
+                onClick={() => window.location.reload(false)}
+                variant="contained"
+              >
+                <Typography p={1}>Reset</Typography>
+              </Button>
+            </Box>
             <Box sx={{ flexGrow: 1, mr: 1 }}>
               <Paper>
                 <TextField
@@ -145,6 +155,11 @@ function App() {
             <Button onClick={handleClick} variant="contained">
               <Typography p={1}>Search</Typography>
             </Button>
+            <Stack direction="row" spacing={2} sx={{ml:1}}>
+              <Avatar alt="Remy Sharp" src="https://reisa.ca/wp-content/uploads/2020/04/canada-gov-2.jpg" />
+              <Avatar alt="Travis Howard" src="https://i.cbc.ca/1.4066392.1541713557!/fileImage/httpImage/cbc-logo-horizontal.jpg" />
+              <Avatar alt="Cindy Baker" src="https://static.toiimg.com/photo/47529300.cms" />
+            </Stack>
           </Grid>
         </Grid>
 
@@ -155,11 +170,11 @@ function App() {
             alignItems="center"
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 4, sm: 8, md: 12 }}
-            sx={{ pt: 4,pb:2 }}
+            sx={{ pt: 4, pb: 2 }}
           >
             {tags.length !== 0 && (
-               <Typography sx={{pr:1}}>Select a Genre: </Typography>
-          )}
+              <Typography sx={{ pr: 1 }}>Select a Genre: </Typography>
+            )}
             {tags?.map((myVar) => {
               return (
                 <Box sx={{ pt: 0.2, pr: 0.2 }}>
