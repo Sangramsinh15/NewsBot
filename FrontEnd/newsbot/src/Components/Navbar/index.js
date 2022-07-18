@@ -1,35 +1,38 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import Button from '@mui/material/Button';
 
-const NavbarComp = () => {
-
+export default function NavbarComp() {
   return (
-    <AppBar position="static">
-      <Grid container maxWidth="xl" justifyContent="center" alignItems="center">
-        <Toolbar disableGutters>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Button color="inherit" sx={{flexGrow: 1}}>
           <Typography
-            variant="h3"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            NewsBot
-          </Typography>
+              variant="h3"
+              noWrap
+              component="div"
+              href="/"
+              sx={{
+                ml: 75,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+                flexGrow: 1,
+              }}
+            >
+              NewsBot
+            </Typography>
+            </Button>
+          <Button color="inherit">Admin</Button>
         </Toolbar>
-      </Grid>
-    </AppBar>
+      </AppBar>
+    </Box>
   );
-};
-export default NavbarComp;
+}
