@@ -49,7 +49,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://3.237.3.159/get_response_1",
+      url: "http://44.192.74.183/get_response_1",
       headers: {
         "Content-Type": "application/json",
       },
@@ -95,7 +95,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://3.237.3.159/get_response_2",
+      url: "http://44.192.74.183/get_response_2",
       headers: {
         "Content-Type": "application/json",
       },
