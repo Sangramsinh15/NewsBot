@@ -1,7 +1,7 @@
 # General AWS Credentials
-aws_access_key_id="ASIAX5UJGMCW6GFMWQZJ"
-aws_secret_access_key="LCD5dunVBpk6bHXRAjQbx11qGDVIcHIyaV2yrSjz"
-aws_session_token="FwoGZXIvYXdzEMj//////////wEaDKu13aGbKjgqBg7uByLAAW4w+eeEvexLuqdGQLN+Rn/1bEqZWXr5E5DB4HifMaH/48vB3sfk2f6apcmfVWyl48Vy1fjVGMxH4B7hlK+aDnzZ54BP4/5+8RI4ernyaI28kJOeQqUXTK+8I4+FEsIT3bl90OQwNs6VOIvFD4K/pftqqEIP3U9zmNs/hE+cs7ITPXzKCnlDvBAmde1AjmCONIRx9lK/ri4xrCImyhPphIZ2/XZDREm1MIvH/9qWPKlUb6Hn6Ew7NVyNrdT/i8ohFCil4tWWBjItyYdOXJwhpF0m5V4pfGMLTAenxDwhelNb6DU0ru3sYalv9Iv2HzvYzsZjZzqY"
+aws_access_key_id="ASIAX5UJGMCWVTVTUK7L"
+aws_secret_access_key="E5UIAK8hjsF+u3+fcYCAeg6EyWDVBflxRMkJg6H+"
+aws_session_token="FwoGZXIvYXdzEMn//////////wEaDNdezVywlUpQ1dRCjSLAAbvEdoBxq8ScoQ7pgO5EzoeXqtz7v8W7ThAegvQDpu6J99iGC/lGcaTSNK+v1x/sqzYsyBL8p+k8Cb9eIb16kO5zxk+WtHWk3VXg2c5BhDeteCA7SVPGpjtFoN7lf1iUk6SJpeqM58WbV5YHVgSUasMVc54XyE9Y8LbOAI71M1SZwLX3vgqbWO+VwqtqNjxfp8XZeDlilkohWBS/C3ZLwItWgMZQJs+bpoBAakqgTOAyJ8MuVFUgUg3duVo5kmsTnyi8+tWWBjItSSSpWHZmnzzHDEhy0Z7/G6MGH9qhVO7IGqTnGH2AfqU9Oa6y9W0NNI6RuVPl"
 aws_userId="user2027430"
 
 # Redis
@@ -21,7 +21,7 @@ top_document_count = 5
 table_name = "news_data"
 
 # APIs
-get_doc = "http://100.24.117.242/get_relevant_docs"
+get_doc = "http://3.237.13.47/get_relevant_docs"
 
 # Lex
 botName="NewsBotOne"

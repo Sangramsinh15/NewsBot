@@ -49,7 +49,7 @@ function MainPage() {
 
     var config = {
       method: "post",
-      url: "http://100.24.117.242/get_response_1",
+      url: "http://3.237.13.47/get_response_1",
       headers: {
         "Content-Type": "application/json",
       },
@@ -95,7 +95,7 @@ function MainPage() {
 
     var config = {
       method: "post",
-      url: "http://100.24.117.242/get_response_2",
+      url: "http://3.237.13.47/get_response_2",
       headers: {
         "Content-Type": "application/json",
       },
