@@ -13,8 +13,8 @@ import { myResponse } from "./Components/Main Header/index1";
 import ResponseCardComp from "./Components/ResponseCardComp";
 import GenreComp from "./Components/GenreComp";
 import DialogComp from "./Components/DialogComp";
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
 
 const darkTheme = createTheme({
   palette: {
@@ -49,7 +49,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://44.192.74.183/get_response_1",
+      url: "http://34.239.166.42/get_response_1",
       headers: {
         "Content-Type": "application/json",
       },
@@ -95,7 +95,7 @@ function App() {
 
     var config = {
       method: "post",
-      url: "http://44.192.74.183/get_response_2",
+      url: "http://34.239.166.42/get_response_2",
       headers: {
         "Content-Type": "application/json",
       },
@@ -126,20 +126,16 @@ function App() {
         </Grid>
 
         <Grid item xs={12}>
-          <Grid
-            container
-            sx={{ pt: 3, pl: 36, pr: 36, pb: 3 }}
-            alignItems="center"
-          >
-            <Box sx={{ mr: 1 }}>
-              <Button
+          <Grid container sx={{ pt: 3, pb: 3 }} alignItems="center">
+            <Box sx={{ mr: 1, pl: 15 }}>
+              <Button color="secondary"
                 onClick={() => window.location.reload(false)}
                 variant="contained"
               >
                 <Typography p={1}>Reset</Typography>
               </Button>
             </Box>
-            <Box sx={{ flexGrow: 1, mr: 1 }}>
+            <Box sx={{ flexGrow: 1, mr: 1, pl: 35 }}>
               <Paper>
                 <TextField
                   id="searchKeyword"
@@ -152,13 +148,25 @@ function App() {
                 />
               </Paper>
             </Box>
-            <Button onClick={handleClick} variant="contained">
-              <Typography p={1}>Search</Typography>
-            </Button>
-            <Stack direction="row" spacing={2} sx={{ml:1}}>
-              <Avatar alt="Remy Sharp" src="https://reisa.ca/wp-content/uploads/2020/04/canada-gov-2.jpg" />
-              <Avatar alt="Travis Howard" src="https://i.cbc.ca/1.4066392.1541713557!/fileImage/httpImage/cbc-logo-horizontal.jpg" />
-              <Avatar alt="Cindy Baker" src="https://static.toiimg.com/photo/47529300.cms" />
+            <Box sx={{ flexGrow: 1, mr: 1, pr: 15 }}>
+              <Button onClick={handleClick} variant="contained">
+                <Typography p={1}>Search</Typography>
+              </Button>
+            </Box>
+            <Typography p={1}>Sources:</Typography>
+            <Stack direction="row" spacing={2} sx={{ ml: 1, pr:15 }}>
+              <Avatar
+                alt="Remy Sharp"
+                src="https://reisa.ca/wp-content/uploads/2020/04/canada-gov-2.jpg"
+              />
+              <Avatar
+                alt="Travis Howard"
+                src="https://i.cbc.ca/1.4066392.1541713557!/fileImage/httpImage/cbc-logo-horizontal.jpg"
+              />
+              <Avatar
+                alt="Cindy Baker"
+                src="https://static.toiimg.com/photo/47529300.cms"
+              />
             </Stack>
           </Grid>
         </Grid>

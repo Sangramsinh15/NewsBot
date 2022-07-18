@@ -8,7 +8,16 @@ function DialogComp(props) {
   refinedDate = refinedDate.substring(0, 10);
 
   return (
-    <Grid sx={{ border: 1, p:1, borderRadius: 1,backgroundColor:"#DBDE96", color:"black" }}>
+    <Grid
+      sx={{
+        border: 1,
+        p: 1,
+        borderRadius: 1,
+        backgroundColor: "#DBDE96",
+        color: "black",
+        flexGrow:1
+      }}
+    >
       <Box
         component="div"
         sx={{
@@ -21,18 +30,20 @@ function DialogComp(props) {
       >
         ({props.ind}) Title: {props.title}
       </Box>
-      <Box
-        component="div"
-        sx={{
-          pt: 1,
-          pl: 3,
-          fontSize: 16,
-          fontFamily: "Arial",
-          fontWeight: "bold",
-        }}
-      >
-        Description: {props.description}
-      </Box>
+      {props.description != "" && (
+        <Box
+          component="div"
+          sx={{
+            pt: 1,
+            pl: 3,
+            fontSize: 16,
+            fontFamily: "Arial",
+            fontWeight: "bold",
+          }}
+        >
+          Description: {props.description}
+        </Box>
+      )}
 
       <Box sx={{ pt: 1 }}></Box>
 
